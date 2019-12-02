@@ -53,7 +53,7 @@ func main() {
 	log.Printf("Part 2: Final value: %d", final2)
 }
 
-func program(opCodes []int, noun int, verb int) int {
+func alg(opCodes []int, noun int, verb int) int {
 	// copy slice to prevent modifying original instructions
 	codes := make([]int, len(opCodes))
 	copy(codes, opCodes)
@@ -75,10 +75,17 @@ func program(opCodes []int, noun int, verb int) int {
 	return codes[0]
 }
 
+// move function execution to separate function for timing
+func program(opCodes []int, noun int, verb int) int {
+	defer timer("program")()
+	return alg(opCodes, noun, verb)
+}
+
 func pair(opCodes []int) int {
+	defer timer("pair")()
 	for i := 0; i < 99; i++ {
 		for j := 0; j < 99; j++ {
-			res := program(opCodes, i, j)
+			res := alg(opCodes, i, j)
 			if res == 19690720 {
 				return (100 * i) + j
 			}
