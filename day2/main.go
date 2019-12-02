@@ -12,11 +12,13 @@ import (
 
 func timer(message string) func() {
 	start := time.Now()
-	return func() { fmt.Println(message, time.Since(start)) }
+	return func() { fmt.Println(message, ": ", time.Since(start)) }
 }
 
 func main() {
 	log.Println("Running day 2")
+	defer timer("day 2 total")()
+
 	file, err := os.Open("input.txt")
 	if err != nil {
 		log.Fatal(err)
