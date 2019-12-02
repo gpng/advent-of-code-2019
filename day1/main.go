@@ -2,10 +2,17 @@ package main
 
 import (
 	"bufio"
+	"fmt"
 	"log"
 	"os"
 	"strconv"
+	"time"
 )
+
+func timer(message string) func() {
+	start := time.Now()
+	return func() { fmt.Println(message, time.Since(start)) }
+}
 
 func main() {
 	log.Println("Running day 1")
@@ -36,7 +43,7 @@ func main() {
 	log.Printf("Part 1: Sum of fuel requirements: %d", fuelRequirements)
 
 	fuelRequirementsAdded := sumOfFuelAdded(masses)
-	log.Printf("Part 1: Sum of fuel requirements with added reuqirements: %d", fuelRequirementsAdded)
+	log.Printf("Part 2: Sum of fuel requirements with added reuqirements: %d", fuelRequirementsAdded)
 }
 
 func massFuel(mass int) int {
@@ -48,6 +55,7 @@ func massFuel(mass int) int {
 }
 
 func sumOfFuel(masses []int) int {
+	defer timer("sumOfFuel")()
 	sum := 0
 
 	for _, v := range masses {
@@ -58,6 +66,7 @@ func sumOfFuel(masses []int) int {
 }
 
 func sumOfFuelAdded(masses []int) int {
+	defer timer("sumOfFuelAdded")()
 	sum := 0
 
 	for _, v := range masses {
