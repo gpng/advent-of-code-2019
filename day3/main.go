@@ -77,32 +77,28 @@ func mapPath(path []string, gridMap map[int]map[int][]int, first bool) {
 		dir, steps := splitInstr(instr)
 		if dir == "R" {
 			for i := 0; i < steps; i++ {
-				totalSteps++
 				x++
 				checkAndInitMapX(gridMap, x)
-				incrSteps(gridMap, x, y, totalSteps, first)
+				incrSteps(gridMap, x, y, &totalSteps, first)
 			}
 		}
 		if dir == "L" {
 			for i := 0; i < steps; i++ {
-				totalSteps++
 				x--
 				checkAndInitMapX(gridMap, x)
-				incrSteps(gridMap, x, y, totalSteps, first)
+				incrSteps(gridMap, x, y, &totalSteps, first)
 			}
 		}
 		if dir == "U" {
 			for i := 0; i < steps; i++ {
-				totalSteps++
 				y++
-				incrSteps(gridMap, x, y, totalSteps, first)
+				incrSteps(gridMap, x, y, &totalSteps, first)
 			}
 		}
 		if dir == "D" {
 			for i := 0; i < steps; i++ {
-				totalSteps++
 				y--
-				incrSteps(gridMap, x, y, totalSteps, first)
+				incrSteps(gridMap, x, y, &totalSteps, first)
 			}
 		}
 	}
@@ -115,15 +111,16 @@ func checkAndInitMapX(gridMap map[int]map[int][]int, x int) {
 	}
 }
 
-func incrSteps(gridMap map[int]map[int][]int, x int, y int, steps int, first bool) {
+func incrSteps(gridMap map[int]map[int][]int, x int, y int, steps *int, first bool) {
+	*steps++
 	if len(gridMap[x][y]) == 0 {
-		gridMap[x][y] = []int{0, steps}
+		gridMap[x][y] = []int{0, *steps}
 	}
 	if first {
-		gridMap[x][y] = []int{1, steps}
+		gridMap[x][y] = []int{1, *steps}
 	} else if gridMap[x][y][0] > 0 {
 		gridMap[x][y][0] = 2
-		gridMap[x][y][1] += steps
+		gridMap[x][y][1] += *steps
 	}
 }
 
