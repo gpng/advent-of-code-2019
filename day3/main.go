@@ -95,7 +95,6 @@ func mapPath(path []string, gridMap map[int]map[int][]int, first bool) {
 			for i := 0; i < steps; i++ {
 				totalSteps++
 				y++
-				checkAndInitMapX(gridMap, x)
 				incrSteps(gridMap, x, y, totalSteps, first)
 			}
 		}
@@ -103,7 +102,6 @@ func mapPath(path []string, gridMap map[int]map[int][]int, first bool) {
 			for i := 0; i < steps; i++ {
 				totalSteps++
 				y--
-				checkAndInitMapX(gridMap, x)
 				incrSteps(gridMap, x, y, totalSteps, first)
 			}
 		}
