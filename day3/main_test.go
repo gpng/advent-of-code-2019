@@ -28,7 +28,7 @@ func TestProgram(t *testing.T) {
 
 	for _, tc := range testCases {
 		minDistance, leastSteps := minDistanceAndSteps(tc.path1, tc.path2)
-		if tc.minDistance != tc.minDistance || tc.leastSteps != tc.leastSteps {
+		if tc.minDistance != minDistance || tc.leastSteps != leastSteps {
 			t.Errorf("Expected %f, %d but got %f, %d", tc.minDistance, tc.leastSteps, minDistance, leastSteps)
 		}
 	}
