@@ -46,31 +46,28 @@ func main() {
 func minDistanceAndSteps(path1 []string, path2 []string) (float64, int) {
 	gridMap := map[int]map[int][]int{} // [x][y][no of visits, steps]
 	mapPath(path1, gridMap, true)
-	mapPath(path2, gridMap, false)
+	intersections := mapPath(path2, gridMap, false)
 
 	minDistance := math.MaxFloat64
 	leastSteps := math.MaxInt32
 
-	for x, xv := range gridMap {
-		for y, yv := range xv {
-			if yv[0] > 1 {
-				distance := math.Abs(float64(x)) + math.Abs(float64(y))
-				if distance < minDistance {
-					minDistance = distance
-				}
-				if yv[1] < leastSteps {
-					leastSteps = yv[1]
-				}
-			}
+	for _, v := range intersections {
+		distance := math.Abs(float64(v[0])) + math.Abs(float64(v[1]))
+		if distance < minDistance {
+			minDistance = distance
+		}
+		if v[2] < leastSteps {
+			leastSteps = v[2]
 		}
 	}
 	return minDistance, leastSteps
 }
 
-func mapPath(path []string, gridMap map[int]map[int][]int, first bool) {
+func mapPath(path []string, gridMap map[int]map[int][]int, first bool) [][]int {
 	x := 0
 	y := 0
 	totalSteps := 0
+	intersections := [][]int{}
 	for _, instr := range path {
 		checkAndInitMapX(gridMap, x)
 
@@ -79,29 +76,30 @@ func mapPath(path []string, gridMap map[int]map[int][]int, first bool) {
 			for i := 0; i < steps; i++ {
 				x++
 				checkAndInitMapX(gridMap, x)
-				incrSteps(gridMap, x, y, &totalSteps, first)
+				incrSteps(gridMap, x, y, &totalSteps, first, &intersections)
 			}
 		}
 		if dir == "L" {
 			for i := 0; i < steps; i++ {
 				x--
 				checkAndInitMapX(gridMap, x)
-				incrSteps(gridMap, x, y, &totalSteps, first)
+				incrSteps(gridMap, x, y, &totalSteps, first, &intersections)
 			}
 		}
 		if dir == "U" {
 			for i := 0; i < steps; i++ {
 				y++
-				incrSteps(gridMap, x, y, &totalSteps, first)
+				incrSteps(gridMap, x, y, &totalSteps, first, &intersections)
 			}
 		}
 		if dir == "D" {
 			for i := 0; i < steps; i++ {
 				y--
-				incrSteps(gridMap, x, y, &totalSteps, first)
+				incrSteps(gridMap, x, y, &totalSteps, first, &intersections)
 			}
 		}
 	}
+	return intersections
 }
 
 // check if top level map has been initialised, otherwise initialise to prevent nil reference err
@@ -111,7 +109,7 @@ func checkAndInitMapX(gridMap map[int]map[int][]int, x int) {
 	}
 }
 
-func incrSteps(gridMap map[int]map[int][]int, x int, y int, steps *int, first bool) {
+func incrSteps(gridMap map[int]map[int][]int, x int, y int, steps *int, first bool, intersections *[][]int) {
 	*steps++
 	if len(gridMap[x][y]) == 0 {
 		gridMap[x][y] = []int{0, *steps}
@@ -121,6 +119,7 @@ func incrSteps(gridMap map[int]map[int][]int, x int, y int, steps *int, first bo
 	} else if gridMap[x][y][0] > 0 {
 		gridMap[x][y][0] = 2
 		gridMap[x][y][1] += *steps
+		*intersections = append(*intersections, []int{x, y, gridMap[x][y][1]})
 	}
 }
 
