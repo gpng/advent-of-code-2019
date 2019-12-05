@@ -32,7 +32,8 @@ func alg(intcodes []int, input int) int {
 	for codes[pos] != 99 {
 		instr := splitInt(codes[pos])
 		opCode := instr[0]
-		if opCode == 1 { // add
+		switch opCode {
+		case 1: // add
 			param1 := paramValue(codes, instr, pos, 1)
 			param2 := paramValue(codes, instr, pos, 2)
 			param3 := codes[pos+3]
@@ -40,8 +41,7 @@ func alg(intcodes []int, input int) int {
 			if param3 != pos {
 				pos += 4
 			}
-		}
-		if opCode == 2 { // multiply
+		case 2: // multiply
 			param1 := paramValue(codes, instr, pos, 1)
 			param2 := paramValue(codes, instr, pos, 2)
 			param3 := codes[pos+3]
@@ -49,17 +49,14 @@ func alg(intcodes []int, input int) int {
 			if param3 != pos {
 				pos += 4
 			}
-		}
-		if opCode == 3 { // set input
+		case 3: // set input
 			codes[codes[pos+1]] = input
 			pos += 2
-		}
-		if opCode == 4 { // output
+		case 4: // output
 			param1 := paramValue(codes, instr, pos, 1)
 			lastOutput = param1
 			pos += 2
-		}
-		if opCode == 5 { // jump if true
+		case 5: // jump if true
 			param1 := paramValue(codes, instr, pos, 1)
 			param2 := paramValue(codes, instr, pos, 2)
 			if param1 > 0 {
@@ -67,8 +64,7 @@ func alg(intcodes []int, input int) int {
 			} else {
 				pos += 3
 			}
-		}
-		if opCode == 6 { // jump if false
+		case 6: // jump if false
 			param1 := paramValue(codes, instr, pos, 1)
 			param2 := paramValue(codes, instr, pos, 2)
 			if param1 == 0 {
@@ -76,8 +72,7 @@ func alg(intcodes []int, input int) int {
 			} else {
 				pos += 3
 			}
-		}
-		if opCode == 7 { // less than
+		case 7: // less than
 			param1 := paramValue(codes, instr, pos, 1)
 			param2 := paramValue(codes, instr, pos, 2)
 			param3 := codes[pos+3]
@@ -89,8 +84,7 @@ func alg(intcodes []int, input int) int {
 			if param3 != pos {
 				pos += 4
 			}
-		}
-		if opCode == 8 { // equals
+		case 8: // equals
 			param1 := paramValue(codes, instr, pos, 1)
 			param2 := paramValue(codes, instr, pos, 2)
 			param3 := codes[pos+3]
