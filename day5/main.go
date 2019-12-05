@@ -48,49 +48,14 @@ func main() {
 		intcodes = append(intcodes, intcode)
 	}
 
-	diagnosticCode := alg(intcodes, 1)
+	diagnosticCode := program1(intcodes, 1)
 	log.Printf("Part 1: Final value: %d", diagnosticCode)
-	diagnosticCode2 := alg2(intcodes, 5)
+	diagnosticCode2 := program2(intcodes, 5)
 	log.Printf("Part 2: Final value: %d", diagnosticCode2)
 
 }
 
 func alg(intcodes []int, input int) int {
-	defer timer("program1")()
-	// copy slice to prevent modifying original instructions
-	codes := make([]int, len(intcodes))
-	copy(codes, intcodes)
-	pos := 0
-	lastOutput := 0
-	for codes[pos] != 99 {
-		instr := splitInt(codes[pos])
-		opCode := instr[0]
-		if opCode == 1 { // add
-			param1 := paramValue(codes, instr, pos, 1)
-			param2 := paramValue(codes, instr, pos, 2)
-			codes[codes[pos+3]] = param1 + param2
-			pos += 4
-		}
-		if opCode == 2 { // multiply
-			param1 := paramValue(codes, instr, pos, 1)
-			param2 := paramValue(codes, instr, pos, 2)
-			codes[codes[pos+3]] = param1 * param2
-			pos += 4
-		}
-		if opCode == 3 { // set input
-			codes[codes[pos+1]] = input
-			pos += 2
-		}
-		if opCode == 4 { // output
-			lastOutput = codes[codes[pos+1]]
-			pos += 2
-		}
-	}
-	return lastOutput
-}
-
-func alg2(intcodes []int, input int) int {
-	defer timer("program2")()
 	// copy slice to prevent modifying original instructions
 	codes := make([]int, len(intcodes))
 	copy(codes, intcodes)
@@ -197,4 +162,14 @@ func paramValue(codes []int, instr []int, pos int, index int) int {
 		return codes[pos+index]
 	}
 	return codes[codes[pos+index]]
+}
+
+func program1(intcodes []int, input int) int {
+	defer timer("part 1")()
+	return alg(intcodes, input)
+}
+
+func program2(intcodes []int, input int) int {
+	defer timer("part 2")()
+	return alg(intcodes, input)
 }
