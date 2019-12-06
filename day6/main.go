@@ -74,7 +74,7 @@ func minOrbits(counts map[string]int, orders map[string][]string, keyStart strin
 			break
 		}
 	}
-	return counts["YOU"] + counts["SAN"] - (2 * counts[last]) - 2
+	return counts[keyStart] + counts[keyEnd] - (2 * counts[last]) - 2
 }
 
 // returns number of orbits from COM to every object
