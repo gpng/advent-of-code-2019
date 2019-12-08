@@ -1,4 +1,4 @@
-package main
+package day5
 
 import (
 	"fmt"
@@ -11,7 +11,8 @@ func timer(message string) func() {
 	return func() { fmt.Println(message, ": ", time.Since(start)) }
 }
 
-func main() {
+// Run day 5
+func Run() {
 	log.Println("Running day 5")
 	defer timer("day 5 total")()
 

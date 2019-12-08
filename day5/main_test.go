@@ -1,4 +1,4 @@
-package main
+package day5
 
 import "testing"
 
@@ -24,7 +24,7 @@ func TestProgram(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		result := alg2(tc.opCodes, tc.input)
+		result := alg(tc.opCodes, tc.input)
 		if tc.result != result {
 			t.Errorf("Expected %d but got %d", tc.result, result)
 		}

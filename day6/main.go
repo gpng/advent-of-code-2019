@@ -1,4 +1,4 @@
-package main
+package day6
 
 import (
 	"bufio"
@@ -14,11 +14,12 @@ func timer(message string) func() {
 	return func() { fmt.Println(message, ": ", time.Since(start)) }
 }
 
-func main() {
+// Run day 6
+func Run() {
 	log.Println("Running day 6")
 	defer timer("day 6 total")()
 
-	file, err := os.Open("input.txt")
+	file, err := os.Open("day6/input.txt")
 	if err != nil {
 		log.Fatal(err)
 	}
