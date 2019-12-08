@@ -1,20 +1,15 @@
 package day4
 
 import (
-	"fmt"
 	"log"
-	"time"
-)
 
-func timer(message string) func() {
-	start := time.Now()
-	return func() { fmt.Println(message, ": ", time.Since(start)) }
-}
+	"github.com/gpng/advent-of-code-2019/utils"
+)
 
 // Run day 4
 func Run() {
 	log.Println("Running day 4")
-	defer timer("day 4 total")()
+	defer utils.Timer("Day 4 total")()
 	start := 387638
 	end := 919123
 

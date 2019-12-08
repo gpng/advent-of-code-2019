@@ -2,22 +2,17 @@ package day1
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"os"
 	"strconv"
-	"time"
-)
 
-func timer(message string) func() {
-	start := time.Now()
-	return func() { fmt.Println(message, ": ", time.Since(start)) }
-}
+	"github.com/gpng/advent-of-code-2019/utils"
+)
 
 // Run day 1
 func Run() {
 	log.Println("Running day 1")
-	defer timer("day 1 total")()
+	defer utils.Timer("Day 1 total")()
 
 	file, err := os.Open("day1/input.txt")
 	if err != nil {
@@ -58,7 +53,7 @@ func massFuel(mass int) int {
 }
 
 func sumOfFuel(masses []int) int {
-	defer timer("sumOfFuel")()
+	defer utils.Timer("Part 1")()
 	sum := 0
 
 	for _, v := range masses {
@@ -69,7 +64,7 @@ func sumOfFuel(masses []int) int {
 }
 
 func sumOfFuelAdded(masses []int) int {
-	defer timer("sumOfFuelAdded")()
+	defer utils.Timer("Part 2")()
 	sum := 0
 
 	for _, v := range masses {

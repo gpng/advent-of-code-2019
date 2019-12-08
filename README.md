@@ -4,6 +4,7 @@
 
 In each day folder:
 
-Run test cases using `go test`
+Run all test cases using `go test ./...`
+or run a day n's tests using `go test ./dayn`
 
-Run final result using `go run main.go`
+Run final result for day n using `go run main.go -d n`

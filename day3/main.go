@@ -2,24 +2,19 @@ package day3
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"math"
 	"os"
 	"strconv"
 	"strings"
-	"time"
-)
 
-func timer(message string) func() {
-	start := time.Now()
-	return func() { fmt.Println(message, ": ", time.Since(start)) }
-}
+	"github.com/gpng/advent-of-code-2019/utils"
+)
 
 // Run day 3
 func Run() {
 	log.Println("Running day 3")
-	defer timer("day 3 total")()
+	defer utils.Timer("Day 3 total")()
 
 	file, err := os.Open("day3/input.txt")
 	if err != nil {

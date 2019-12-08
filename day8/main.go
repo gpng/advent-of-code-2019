@@ -8,18 +8,14 @@ import (
 	"os"
 	"strconv"
 	"strings"
-	"time"
-)
 
-func timer(message string) func() {
-	start := time.Now()
-	return func() { fmt.Println(message, ": ", time.Since(start)) }
-}
+	"github.com/gpng/advent-of-code-2019/utils"
+)
 
 // Run day 8
 func Run() {
 	log.Println("Running day 8")
-	defer timer("day 8 total")()
+	defer utils.Timer("Day 8 total")()
 
 	file, err := os.Open("day8/input.txt")
 	if err != nil {
@@ -57,7 +53,7 @@ func Run() {
 }
 
 func minZeroes(data []int, width int, height int) ([][]int, int) {
-	defer timer("part 1")()
+	defer utils.Timer("Part 1")()
 	count0 := 0
 	count1 := 0
 	count2 := 0
@@ -103,7 +99,7 @@ func minZeroes(data []int, width int, height int) ([][]int, int) {
 }
 
 func printImage(layers [][]int, width int, height int) {
-	defer timer("part 2")()
+	defer utils.Timer("Part 2")()
 	index := 0
 	for i := 0; i < width*height; i++ {
 		for j := 0; j < len(layers); j++ {

@@ -2,23 +2,18 @@ package day2
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"os"
 	"strconv"
 	"strings"
-	"time"
-)
 
-func timer(message string) func() {
-	start := time.Now()
-	return func() { fmt.Println(message, ": ", time.Since(start)) }
-}
+	"github.com/gpng/advent-of-code-2019/utils"
+)
 
 // Run day 2
 func Run() {
 	log.Println("Running day 2")
-	defer timer("day 2 total")()
+	defer utils.Timer("Day 2 total")()
 
 	file, err := os.Open("day2/input.txt")
 	if err != nil {
@@ -80,12 +75,12 @@ func alg(opCodes []int, noun int, verb int) int {
 
 // move function execution to separate function for timing
 func program(opCodes []int, noun int, verb int) int {
-	defer timer("program")()
+	defer utils.Timer("Part 1")()
 	return alg(opCodes, noun, verb)
 }
 
 func pair(opCodes []int) int {
-	defer timer("pair")()
+	defer utils.Timer("Part 2")()
 	for i := 0; i < 99; i++ {
 		for j := 0; j < 99; j++ {
 			res := alg(opCodes, i, j)

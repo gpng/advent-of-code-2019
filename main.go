@@ -20,32 +20,31 @@ func main() {
 
 	flag.Parse()
 
-	if *day == 0 {
-		log.Fatalf("-d Day flag required")
+	runMap := map[int]func(){
+		1: day1.Run,
+		2: day2.Run,
+		3: day3.Run,
+		4: day4.Run,
+		5: day5.Run,
+		6: day6.Run,
+		7: day7.Run,
+		8: day8.Run,
 	}
 
-	switch *day {
-	case 0:
-		log.Fatalf("-d Day flag required")
-	case 1:
-		day1.Run()
-	case 2:
-		day2.Run()
-	case 3:
-		day3.Run()
-	case 4:
-		day4.Run()
-	case 5:
-		day5.Run()
-	case 6:
-		day6.Run()
-	case 7:
-		day7.Run()
-	case 8:
-		day8.Run()
-	default:
+	// run all
+	if *day == 0 {
+		for i := 1; i <= len(runMap); i++ {
+			runMap[i]()
+		}
+		os.Exit(0)
+	}
+
+	fn, ok := runMap[*day]
+	if !ok {
 		log.Fatalf("Invalid day %d", *day)
 	}
+
+	fn()
 
 	os.Exit(0)
 }

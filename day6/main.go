@@ -2,22 +2,17 @@ package day6
 
 import (
 	"bufio"
-	"fmt"
 	"log"
 	"os"
 	"strings"
-	"time"
-)
 
-func timer(message string) func() {
-	start := time.Now()
-	return func() { fmt.Println(message, ": ", time.Since(start)) }
-}
+	"github.com/gpng/advent-of-code-2019/utils"
+)
 
 // Run day 6
 func Run() {
 	log.Println("Running day 6")
-	defer timer("day 6 total")()
+	defer utils.Timer("Day 6 total")()
 
 	file, err := os.Open("day6/input.txt")
 	if err != nil {
@@ -49,7 +44,7 @@ func Run() {
 }
 
 func totalOrbits(orbits map[string][]string, counts map[string]int) (int, map[string][]string) {
-	defer timer("part 1")()
+	defer utils.Timer("Part 1")()
 	count := 0
 	orders := map[string][]string{}
 	com := orbits["COM"]
@@ -63,7 +58,7 @@ func totalOrbits(orbits map[string][]string, counts map[string]int) (int, map[st
 
 // calculate the min transfers needed by finding the intersection between the 2 paths
 func minOrbits(counts map[string]int, orders map[string][]string, keyStart string, keyEnd string) int {
-	defer timer("part 2")()
+	defer utils.Timer("Part 2")()
 	pathStart := orders[keyStart]
 	pathEnd := orders[keyEnd]
 
