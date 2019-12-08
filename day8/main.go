@@ -107,8 +107,12 @@ func printImage(layers [][]int, width int, height int) {
 	for i := 0; i < width*height; i++ {
 		for j := 0; j < len(layers); j++ {
 			v := layers[j][i]
+			if v == 0 {
+				fmt.Print(" ")
+				break
+			}
 			if v == 0 || v == 1 {
-				fmt.Printf("%d%d", v, v)
+				fmt.Print("█")
 				break
 			}
 			if j == len(layers)-1 { // last layer
