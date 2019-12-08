@@ -1,9 +1,7 @@
 package day6
 
 import (
-	"bufio"
 	"log"
-	"os"
 	"strings"
 
 	"github.com/gpng/advent-of-code-2019/utils"
@@ -14,24 +12,14 @@ func Run() {
 	log.Println("Running day 6")
 	defer utils.Timer("Day 6 total")()
 
-	file, err := os.Open("day6/input.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
+	lines := utils.ScanFile("day6/input.txt")
 
 	orbits := map[string][]string{}
-	scanner := bufio.NewScanner(file)
 
-	for scanner.Scan() {
-		line := scanner.Text()
+	for _, line := range lines {
 		orbit := strings.Split(line, ")")
 
 		orbits[orbit[0]] = append(orbits[orbit[0]], orbit[1])
-	}
-
-	if err := scanner.Err(); err != nil {
-		log.Fatal(err)
 	}
 
 	counts := map[string]int{}
@@ -39,7 +27,6 @@ func Run() {
 	log.Printf("Part 1: Total orbits: %d", count3)
 
 	min := minOrbits(counts, orders, "YOU", "SAN")
-
 	log.Printf("Part 2: Minimum orbital transfers: %d", min)
 }
 

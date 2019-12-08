@@ -1,12 +1,9 @@
 package day3
 
 import (
-	"bufio"
 	"log"
 	"math"
-	"os"
 	"strconv"
-	"strings"
 
 	"github.com/gpng/advent-of-code-2019/utils"
 )
@@ -16,23 +13,7 @@ func Run() {
 	log.Println("Running day 3")
 	defer utils.Timer("Day 3 total")()
 
-	file, err := os.Open("day3/input.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
-	instructions := [][]string{}
-
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		line := scanner.Text()
-		instructions = append(instructions, strings.Split(line, ","))
-	}
-
-	if err := scanner.Err(); err != nil {
-		log.Fatal(err)
-	}
+	instructions := utils.ScanFileLinesToStrings("day3/input.txt", ",")
 
 	minDistance, leastSteps := minDistanceAndSteps(instructions[0], instructions[1])
 	log.Printf("Part 1: Minimum distance: %f", minDistance)

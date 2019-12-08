@@ -1,13 +1,9 @@
 package day8
 
 import (
-	"bufio"
 	"fmt"
 	"log"
 	"math"
-	"os"
-	"strconv"
-	"strings"
 
 	"github.com/gpng/advent-of-code-2019/utils"
 )
@@ -17,32 +13,7 @@ func Run() {
 	log.Println("Running day 8")
 	defer utils.Timer("Day 8 total")()
 
-	file, err := os.Open("day8/input.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
-
-	data := []int{}
-	scanner := bufio.NewScanner(file)
-	var dataStrings []string
-
-	for scanner.Scan() {
-		line := scanner.Text()
-		dataStrings = strings.Split(line, "")
-	}
-
-	if err := scanner.Err(); err != nil {
-		log.Fatal(err)
-	}
-
-	for _, v := range dataStrings {
-		val, err := strconv.Atoi(v)
-		if err != nil {
-			log.Panicf("Failed to convert int %s with err: %v", v, err)
-		}
-		data = append(data, val)
-	}
+	data := utils.ScanFileLinesToInt("day8/input.txt", "")
 
 	width := 25
 	height := 6

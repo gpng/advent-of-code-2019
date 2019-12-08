@@ -1,11 +1,7 @@
 package day2
 
 import (
-	"bufio"
 	"log"
-	"os"
-	"strconv"
-	"strings"
 
 	"github.com/gpng/advent-of-code-2019/utils"
 )
@@ -15,46 +11,19 @@ func Run() {
 	log.Println("Running day 2")
 	defer utils.Timer("Day 2 total")()
 
-	file, err := os.Open("day2/input.txt")
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer file.Close()
+	intcodes := utils.ScanFileLinesToInt("day2/input.txt", ",")
 
-	text := ""
-
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		line := scanner.Text()
-		text += line
-	}
-
-	if err := scanner.Err(); err != nil {
-		log.Fatal(err)
-	}
-
-	opCodesStrings := strings.Split(text, ",")
-	opCodes := []int{}
-
-	for _, v := range opCodesStrings {
-		opCode, err := strconv.Atoi(v)
-		if err != nil {
-			log.Printf("Failed to convert text to integer\nline: %s\nerror: %v", v, err)
-		}
-		opCodes = append(opCodes, opCode)
-	}
-
-	final := program(opCodes, 12, 2)
+	final := program(intcodes, 12, 2)
 	log.Printf("Part 1: Final value: %d", final)
 
-	final2 := pair(opCodes)
+	final2 := pair(intcodes)
 	log.Printf("Part 2: Final value: %d", final2)
 }
 
-func alg(opCodes []int, noun int, verb int) int {
+func alg(intcode []int, noun int, verb int) int {
 	// copy slice to prevent modifying original instructions
-	codes := make([]int, len(opCodes))
-	copy(codes, opCodes)
+	codes := make([]int, len(intcode))
+	copy(codes, intcode)
 	codes[1] = noun
 	codes[2] = verb
 
@@ -74,16 +43,16 @@ func alg(opCodes []int, noun int, verb int) int {
 }
 
 // move function execution to separate function for timing
-func program(opCodes []int, noun int, verb int) int {
+func program(intcodes []int, noun int, verb int) int {
 	defer utils.Timer("Part 1")()
-	return alg(opCodes, noun, verb)
+	return alg(intcodes, noun, verb)
 }
 
-func pair(opCodes []int) int {
+func pair(intcodes []int) int {
 	defer utils.Timer("Part 2")()
 	for i := 0; i < 99; i++ {
 		for j := 0; j < 99; j++ {
-			res := alg(opCodes, i, j)
+			res := alg(intcodes, i, j)
 			if res == 19690720 {
 				return (100 * i) + j
 			}
