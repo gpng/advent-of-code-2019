@@ -13,26 +13,18 @@ func Run() {
 
 	intcodes := utils.ScanFileLinesToInt("day7/input.txt", ",")
 
-	res1 := linearMode(intcodes, []int{0, 1, 2, 3, 4})
+	res1 := maxThrust(intcodes, []int{0, 1, 2, 3, 4})
 	log.Printf("Part 1: %d", res1)
 
-	res2 := feedbackLoopMode(intcodes, []int{5, 6, 7, 8, 9})
+	res2 := maxSuperThrust(intcodes, []int{5, 6, 7, 8, 9})
 	log.Printf("Part 2: %d", res2)
 }
 
-func linearMode(intcodes []int, phases []int) int {
+func maxThrust(intcodes []int, phases []int) int {
 	defer utils.Timer("Part 1")()
 	maxOutput := 0
 	for _, v := range permutations(phases) {
-		output := 0
-		for _, i := range v {
-			c := &com{0, 0, intcodes, false}
-			c.setInput(i, false) // set phase
-			for !c.end {
-				c.setInput(output, false)
-			}
-			output = c.output
-		}
+		output := linearMode(intcodes, v)
 		if output > maxOutput {
 			maxOutput = output
 		}
@@ -40,33 +32,50 @@ func linearMode(intcodes []int, phases []int) int {
 	return maxOutput
 }
 
-func feedbackLoopMode(intcodes []int, phases []int) int {
+func maxSuperThrust(intcodes []int, phases []int) int {
 	defer utils.Timer("Part 2")()
 	maxOutput := 0
 	for _, v := range permutations(phases) {
-		// initialise all machines and set phase
-		machines := map[int]*com{}
-		for i, v := range v {
-			machines[i] = &com{0, 0, intcodes, false}
-			machines[i].setInput(v, false)
-		}
-		output := 0
-		end := false
-		for !end {
-			for i := 0; i < len(machines); i++ {
-				machines[i].setInput(output, true)
-				output = machines[i].output
-				if i == len(machines)-1 && machines[i].end {
-					end = true
-				}
-			}
-		}
-
+		output := feedbackLoopMode(intcodes, v)
 		if output > maxOutput {
 			maxOutput = output
 		}
 	}
 	return maxOutput
+}
+
+func linearMode(intcodes []int, phaseSettings []int) int {
+	output := 0
+	for _, i := range phaseSettings {
+		c := &com{0, 0, intcodes, false}
+		c.setInput(i, false) // set phase
+		for !c.end {
+			c.setInput(output, false)
+		}
+		output = c.output
+	}
+	return output
+}
+
+func feedbackLoopMode(intcodes []int, phaseSettings []int) int {
+	// initialise all machines and set phase
+	machines := map[int]*com{}
+	for i, v := range phaseSettings {
+		machines[i] = &com{0, 0, intcodes, false}
+		machines[i].setInput(v, false)
+	}
+	output := 0
+	end := false
+	for !end {
+		for i := 0; i < len(machines); i++ {
+			machines[i].setInput(output, true)
+			output = machines[i].output
+			if i == len(machines)-1 && machines[i].end {
+				end = true
+			}
+		}
+	}
+	return output
 }
 
 func permutations(list []int) [][]int {

@@ -13,7 +13,7 @@ func TestLinearMode(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		result := linearMode(tc.intcodes, []int{0, 1, 2, 3, 4})
+		result := maxThrust(tc.intcodes, []int{0, 1, 2, 3, 4})
 		if tc.result != result {
 			t.Errorf("Expected %d but got %d", tc.result, result)
 		}
@@ -30,7 +30,7 @@ func TestFeedbackLoopMode(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		result := feedbackLoopMode(tc.intcodes, []int{5, 6, 7, 8, 9})
+		result := maxSuperThrust(tc.intcodes, []int{5, 6, 7, 8, 9})
 		if tc.result != result {
 			t.Errorf("Expected %d but got %d", tc.result, result)
 		}
