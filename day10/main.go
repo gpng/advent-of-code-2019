@@ -42,7 +42,6 @@ func newStation(asteroids [][]int) (int, []int, map[float64][][]int) {
 	maxCoord := []int{0, 0}
 	mapMaxCoords := map[float64][][]int{}
 	for _, coords := range asteroids {
-		// log.Println("coords", coords)
 		count := 0
 		gradientMap := map[float64][][]int{} // gradient: steps
 		for _, asteroid := range asteroids {
@@ -76,7 +75,6 @@ func newStation(asteroids [][]int) (int, []int, map[float64][][]int) {
 			if gradient < 0 {
 				gradient += 360
 			}
-			// log.Println(x, y, gradient)
 			if gradientMap[gradient] == nil {
 				count++
 				gradientMap[gradient] = [][]int{asteroid}
