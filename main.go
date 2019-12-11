@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"github.com/gpng/advent-of-code-2019/day11"
 	"log"
 	"os"
 
@@ -33,6 +34,7 @@ func main() {
 		8:  day8.Run,
 		9:  day9.Run,
 		10: day10.Run,
+		11: day11.Run,
 	}
 
 	// run all
