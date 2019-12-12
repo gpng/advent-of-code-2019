@@ -61,7 +61,6 @@ func intcodeCom(intcodes []int, prevOutput int, startPos int, relativeBase int, 
 	copy(codes, intcodes)
 	pos := startPos
 	output := prevOutput
-	end := false
 	base := relativeBase
 	for codes[pos] != 99 {
 		instr := splitInt(codes[pos])
@@ -90,16 +89,14 @@ func intcodeCom(intcodes []int, prevOutput int, startPos int, relativeBase int, 
 			updateSliceLength(&codes, param1)
 			codes[param1] = input
 			pos += 2
-			if waitOutput {
-				end = true
-			} else {
+			if !waitOutput {
 				return codes, output, pos, base, false
 			}
 		case 4: // output
 			param1 := paramValue(codes, instr, pos, base, 1, false)
 			output = param1
 			pos += 2
-			if waitOutput && end {
+			if waitOutput {
 				return codes, output, pos, base, false
 			}
 		case 5: // jump if true
