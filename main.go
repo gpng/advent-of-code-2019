@@ -4,6 +4,7 @@ import (
 	"flag"
 	"github.com/gpng/advent-of-code-2019/day11"
 	"github.com/gpng/advent-of-code-2019/day12"
+	"github.com/gpng/advent-of-code-2019/day13"
 	"log"
 	"os"
 
@@ -37,6 +38,7 @@ func main() {
 		10: day10.Run,
 		11: day11.Run,
 		12: day12.Run,
+		13: day13.Run,
 	}
 
 	// run all
